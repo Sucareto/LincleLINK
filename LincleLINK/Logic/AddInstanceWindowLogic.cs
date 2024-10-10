@@ -238,7 +238,7 @@ namespace LincleLINK
                     relativePath = string.Empty;
                 }
                 string hash = await Task.Run(() => GetMD5Checksum(file.FullName));
-                string hashedFileName = hash + file.Extension;
+                string hashedFileName = hash;
                 //string hashedFileName = "test";
                 LogList.Add($"Hashing {file.FullName}");
                 if (IsCopyChecked == true && IsMoveChecked == false)

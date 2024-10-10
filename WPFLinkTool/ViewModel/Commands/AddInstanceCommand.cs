@@ -45,7 +45,7 @@ namespace WPFLinkTool
                     // Hash and make file infos
                     vm.StatusText = $"Hashing {file.FullName}";
                     string hash = await Task.Run(() => GetMD5Checksum(file.FullName));
-                    InstanceFileInfo inFile = new(file.Name, hash + file.Extension,
+                    InstanceFileInfo inFile = new(file.Name, hash,
                         file.DirectoryName.Replace(vm.DataSource, ""), file.Length);
                     instanceSize += file.Length;
 
@@ -56,17 +56,17 @@ namespace WPFLinkTool
                     fileInfos.Add(inFile);
 
                     // Check if file exists and move/copy
-                    if (!File.Exists(dbDir + @"\" + hash + file.Extension))
+                    if (!File.Exists(dbDir + @"\" + hash))
                     {
                         if (vm.IsCopyChecked)
                         {
                             vm.StatusText = $"Copying {file.Name}";
-                            await Task.Run(() => File.Copy(file.FullName, dbDir + @"\" + hash + file.Extension));
+                            await Task.Run(() => File.Copy(file.FullName, dbDir + @"\" + hash));
                         }
                         else
                         {
                             vm.StatusText = $"Moving {file.Name}";
-                            await Task.Run(() => File.Move(file.FullName, dbDir + @"\" + hash + file.Extension));
+                            await Task.Run(() => File.Move(file.FullName, dbDir + @"\" + hash));
                         }
                     }
                     else already++;
