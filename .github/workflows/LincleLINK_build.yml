@@ -1,0 +1,19 @@
+name: LincleLINK_build
+
+on:
+  # push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: dotnet build .\LincleLINK\LincleLINK.csproj --configuration Release
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LincleLINK_Release
+          path: .\LincleLINK\bin\Release\net6.0-windows\
